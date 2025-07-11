@@ -55,6 +55,7 @@ section {
     display: flex;
     align-items: center;
     justify-content: center;
+    
 } */
 
 .circle-section {
@@ -64,6 +65,9 @@ section {
     border: 2px black solid;
     width: 45vw;
     height: 45vw;
+    left: 0vw;
+    top: 0vw;
+    /* transform: rotate(45deg); */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -76,7 +80,7 @@ section {
 } */
 
 .circle-list-el-container {
-    background-color: rgb(226, 105, 105);
+    /* background-color: rgb(226, 105, 105); */
     width: 250vw;
     height: 420px;
     transform-origin: top left;
@@ -86,6 +90,7 @@ section {
     padding-left: 70vw;
     justify-items: start;
     background-color: transparent !important;
+    overflow: visible;
 }
 
 .slice-line-divider {
@@ -97,11 +102,55 @@ section {
     left: 0;
     opacity: 0;
     transition: opacity .5s ease;
+    transform-origin: top left;
 }
 
 .slice-line-divider.main {
     opacity: 1;
     background-color: red;
+}
+
+.has-box .slice-line-divider {
+    background-color: green;
+}
+
+
+.box_row_container {
+    width: 100%;
+    position: relative;
+    overflow: visible;
+}
+.box_row_container_inner {
+    position: relative;
+    display: flex;
+    gap: 8vw;
+    align-items: center;
+    overflow: visible;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+.line_box_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20rem;
+    height: 8rem;
+    background-color: white;
+    border: 1px black solid;
+    bottom: 20rem;
+    left: 0rem;
+}
+
+.line_box_container::before {
+    content: '';
+    position: absolute;
+    top: -1rem;
+    margin: auto;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 100%;
+    background: red;
 }
 
 .circle-list-el-content {
