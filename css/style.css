@@ -159,6 +159,7 @@ section {
     overflow: visible;
     flex-wrap: nowrap;
     white-space: nowrap;
+    left: -20vw;
 }
 
 .line_box_container {
@@ -169,18 +170,17 @@ section {
     height: 8rem;
     background-color: white;
     border: 1px var(--main-color) solid;
-    bottom: 20rem;
+    bottom: -10rem;
     left: 0rem;
     position: absolute;
 }
 
-.line_box_container::before {
-    content: '';
+.line_box_circle {
     position: absolute;
-    top: -1rem;
+    top: -.6rem;
     margin: auto;
-    width: 2rem;
-    height: 2rem;
+    width: 1.2rem;
+    height: 1.2rem;
     border-radius: 100%;
     /* background: red; */
 }

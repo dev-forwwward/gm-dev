@@ -10,7 +10,12 @@ function init() {
 
     ScrollTrigger.refresh();
 
+    setSliceLineWidth();
+
+    const circle = document.querySelector('.circle-section');
+
     console.log("doc loaded");
+    console.log("screen diagonal is:", Math.sqrt(Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2)));
 
     // circle intersection
     gsap.timeline({
@@ -211,7 +216,7 @@ function init() {
     let boxLines = document.querySelectorAll('.circle-list-el-container.has-box .slice-line-divider');
     let boxes = document.querySelectorAll('.line_box_container');
 
-    // rotate circle again - with brand boxes
+    // rotate circle again - with brand boxes horizontal scroll over lines
     gsap.timeline({
         scrollTrigger: {
             trigger: '.brand_carousel_trigger',
@@ -219,41 +224,75 @@ function init() {
             end: '+=350%',
             scrub: true,
             pin: true,
-            // toggleActions: 'play none reverse none',
-            onUpdate: (self) => {
-                boxLines.forEach((line, index) => {
-                    let currentRotation = gsap.getProperty(line, "rotation");
-                    let angleRad = currentRotation * (Math.PI / 180);
-                    let originX = line.getBoundingClientRect().left + (line.offsetWidth / 2);
-                    let intersectionX;
 
-                    if (Math.abs(angleRad) % Math.PI === Math.PI / 2 || Math.abs(angleRad) % Math.PI === -Math.PI / 2) {
-                        intersectionX = originX;
-                    } else {
-                        // intersectionX = originX + (Math.tan(angleRad) * line.offsetHeight);
-                        intersectionX = originX + (600 / Math.tan(angleRad)) * line.offsetHeight;
-                    }
-
-                    gsap.set(boxes[index], {
-                        left: intersectionX - (boxes[index].offsetWidth / 2),
-                    });
-
-                    console.log(`Line ${index} - Intersection X: ${intersectionX}`);
-                });
-            }
         },
     }).to('.slice-line-divider', {
-        rotateZ: '-75deg',
-        // stagger: {
-        //     each: 0.0125,
-        //     from: 10, // start from the 6th element (index-based)
-        // },
-        ease: 'power2.out'
+        // rotateZ: '-75deg',
+        rotation: "-=75",
+        stagger: {
+            each: 0.0125,
+            from: 12, // start from the 6th element (index-based)
+        },
+        ease: 'none',
+        onUpdate: (self) => {
+            boxLines.forEach((line, index) => {
+                let currentRotation = gsap.getProperty(line, "rotation");
+                // let angleRad = (currentRotation) * (Math.PI / 180);
+
+                let angleRad = (currentRotation + 22.5*index) * (Math.PI / 180);
+                // let originX = line.getBoundingClientRect().left + (line.offsetWidth / 2);
+
+                let originX = circle.getBoundingClientRect().left + circle.offsetWidth / 2;
+                let originY = circle.getBoundingClientRect().top + circle.offsetHeight / 2;
+
+                let endX = boxes[index].getBoundingClientRect().left + boxes[index].offsetWidth / 2;
+                let endY = boxes[index].getBoundingClientRect().top;
+
+                let intersectionX;
+                let verticalDistance = endY - originY;
+
+                if (Math.abs(Math.cos(angleRad)) < 0.001) {
+                    intersectionX = originX;
+                } else {
+                    // intersectionX = originX - (Math.tan(angleRad) * line.offsetHeight);
+                    intersectionX = originX + (verticalDistance * Math.tan(angleRad))*.9;
+                }
+
+                gsap.set(boxes[index], {
+                    left: -(intersectionX - (boxes[index].offsetWidth / 2)),
+                });
+
+                // boxes[index].querySelector('.line_box_circle').style.left = `${-endX*.01}px`;
+
+                // Debugging logs - essential for fine-tuning!
+                console.log(`--- Line ${index} ---`);
+                console.log(`Current Line Rotation: ${currentRotation.toFixed(2)} deg`);
+                console.log(`Angle Rad (for box): ${angleRad.toFixed(2)}`);
+                console.log(`Origin Y: ${originY.toFixed(2)}px, Target Line Y: ${endY.toFixed(2)}px`);
+                console.log(`Vertical Distance (Adjacent): ${verticalDistance.toFixed(2)}px`);
+                console.log(`Calculated Tan(angleRad): ${Math.tan(angleRad).toFixed(2)}`);
+                console.log(`Calculated Intersection X: ${intersectionX.toFixed(2)}px`);
+                console.log(`Box Final Left Position: ${gsap.getProperty(boxes[index], "left").toFixed(2)}px`);
+            });
+        }
     });
     // .to(".circle-list-el-container:not(.has-box) .slice-line-divider", {
     //     skewY: '-90deg',
     //     ease: 'power2.inOut'
     // // }, "<");
+
+    function setSliceLineWidth() {
+        let lines = document.querySelectorAll('.slice-line-divider');
+
+        // set line width to always be as wide as the viewport's diagonal*1.2 (largest possible visible line and a little more)
+        lines.forEach((line) => {
+            line.style.width = Math.sqrt(Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2)) * 1.2 + "px";
+        });
+    }
+
+    window.addEventListener('resize', () => {
+        setSliceLineWidth();
+    });
 
 
     // lines.forEach((line, index) => {
