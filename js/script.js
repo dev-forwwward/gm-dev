@@ -164,51 +164,23 @@ function init() {
             rotate: "-168deg",
             duration: 1
         })
-        //////////// .to('.circle-list-el-content', {
-        //     delay: .012,
-        //     opacity: 1,
-        //     duration: 0.15,
-        //     stagger: 0.077,
-        // }, "<")
-        // .to('.circle-list-el-content', {
-        //     delay: .1,
-        //     opacity: 0,
-        //     duration: 0.15,
-        //     stagger: 0.1,
-        // }, "<");
-    // .to('.circle-list-el-content', {
-    //     delay: 1,
-    //     opacity: 1,
-    //     duration: 0.1,
-    //     stagger: .5
-    // }, "<");
-
-    // document.querySelectorAll('.circle-list-container-outer').forEach((listEl) => {
-    //     let content = listEl.querySelector('.circle-list-el-content');
-    //     // ScrollTrigger.create({
-    //     //     trigger: listEl,
-    //     //     start: "top center",
-    //     //     end: "+=80%",
-    //     //     markers: true,
-    //     // })
-    //     gsap.to(content, {
-    //         scrollTrigger: {
-    //             trigger: listEl,
-    //             start: "top center",
-    //             end: "+=50%",
-    //             markers: true,
-    //         },
-    //         opacity: 1,
-    //         duration: .5,
-    //         ease: "ease2.out"
-    //     });
-    // });
+        .to('.circle-list-el-content', {
+            delay: .012,
+            opacity: 1,
+            duration: 0.15,
+            stagger: 0.077,
+        }, "<")
+        .to('.circle-list-el-content', {
+            delay: .12,
+            opacity: 0,
+            duration: 0.15,
+            stagger: 0.1,
+        }, "<");
 
 
 
     // BRAND CAROUSEL
     // move circle up
-
     gsap.timeline({
         scrollTrigger: {
             trigger: '.brand_carousel_trigger',
