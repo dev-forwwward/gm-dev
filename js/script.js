@@ -389,5 +389,26 @@ function init() {
     //     });
     // });
 
+
+    // center circle element on scroll to Contact section
+    gsap.timeline({
+        scrollTrigger: {
+            trigger: '.contact_section',
+            start: 'top bottom',
+            end: 'bottom bottom',
+            scrub: true,
+            immediateRender: false
+        }
+    })
+        .to('.circle-section', {
+            left: 0,
+            top: 'auto',
+            width: '45vw',
+            height: '45vw'
+        })
+        .to('.slice-line-divider', {
+            rotate: (amountToRotate - 3)
+        }, "<");
+
     ScrollTrigger.refresh();
 }
