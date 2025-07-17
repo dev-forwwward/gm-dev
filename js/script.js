@@ -17,6 +17,20 @@ function init() {
     console.log("doc loaded");
     console.log("screen diagonal is:", Math.sqrt(Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2)));
 
+    // hero circles rotation into 2nd section
+    gsap.timeline({
+        scrollTrigger: {
+            trigger: '.hero_section',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
+            markers: true
+        }
+    }).to('.circle-section-container', {
+        rotate: 0,
+        ease: 'power2.out'
+    });
+
     // circle intersection
     gsap.timeline({
         scrollTrigger: {
@@ -45,17 +59,20 @@ function init() {
             duration: .5,
         }, "<");
 
-    // fix 'advantages' row blocks
-    gsap.timeline({
-        scrollTrigger: {
-            trigger: '.advantages_section',
-            start: 'top top',
-            end: '+=225%',
-            pin: true,
-            pinSpacing: false,
-            // anticipatePin: true,
-        }
-    });
+
+    if (window.innerWidth > 991) {
+        // fix 'advantages' row blocks - only in desktop
+        gsap.timeline({
+            scrollTrigger: {
+                trigger: '.advantages_section',
+                start: 'top top',
+                end: '+=225%',
+                pin: true,
+                pinSpacing: false,
+                // anticipatePin: true,
+            }
+        });
+    }
 
 
     //corner lines close in to form an X
@@ -239,7 +256,7 @@ function init() {
                 let currentRotation = gsap.getProperty(line, "rotation");
                 // let angleRad = (currentRotation) * (Math.PI / 180);
 
-                let angleRad = (currentRotation + 22.5*index) * (Math.PI / 180);
+                let angleRad = (currentRotation + 22.5 * index) * (Math.PI / 180);
                 // let originX = line.getBoundingClientRect().left + (line.offsetWidth / 2);
 
                 let originX = circle.getBoundingClientRect().left + circle.offsetWidth / 2;
@@ -255,7 +272,7 @@ function init() {
                     intersectionX = originX;
                 } else {
                     // intersectionX = originX - (Math.tan(angleRad) * line.offsetHeight);
-                    intersectionX = originX + (verticalDistance * Math.tan(angleRad))*.9;
+                    intersectionX = originX + (verticalDistance * Math.tan(angleRad)) * .9;
                 }
 
                 gsap.set(boxes[index], {
