@@ -1,6 +1,7 @@
 :root {
     --main-color: #AE9EA1;
     --bg-color: #F0E7E9;
+    --bg-color-dark: #2A2A2A;
 }
 
 * {
@@ -19,6 +20,11 @@ h2 {
 
 body {
     background-color: var(--bg-color);
+    color: var(--bg-color-dark);
+}
+
+body.dark {
+    background-color: var(--bg-color-dark);
 }
 
 .overflow-hidden {
@@ -72,6 +78,18 @@ section {
     align-items: center;
     justify-content: center;
     transform: rotate(-45deg);
+}
+
+/* *  {
+    overflow: visible !important;
+}
+section {
+    transform: scale(.25);
+    overflow: visible;
+} */
+
+.circle-section {
+    overflow: visible;
 }
 
 .circle-section,
@@ -318,4 +336,23 @@ section {
     transform: translate(0px, 50svh) rotate(45deg);
     background-color: var(--main-color);
     transform-origin: center left;
+}
+
+.circle_mask,
+.circle_mask_light {
+    position: absolute;
+    inset: auto;
+    width: 0vw;
+    height: 0vw;
+    background-color: var(--bg-color-dark);
+    border-radius: 100%;
+    z-index: 0;
+}
+
+.circle_mask_light {
+    background-color: var(--bg-color);
+}
+
+.hide {
+    display: none;
 }

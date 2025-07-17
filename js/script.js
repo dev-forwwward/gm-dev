@@ -124,6 +124,22 @@ function init() {
             duration: 0
         }, "<");
 
+    gsap.fromTo('.circle_mask', {
+        width: '0vw',
+        height: '0vw',
+    }, {
+        scrollTrigger: {
+            trigger: '.circle_mask_zoom_trigger',
+            start: 'top-=25% bottom',
+            end: '+=300%',
+            scrub: true,
+            markers: true
+        },
+        width: '200vw',
+        height: '200vw',
+        duration: 1,
+        immediateRender: false
+    });
 
     // note: zooms AND turns a bit
     gsap.timeline({
@@ -133,6 +149,22 @@ function init() {
             end: 'bottom top',
             scrub: true,
             invalidateOnRefresh: true,
+            onEnter: () => {
+                document.querySelector('body').classList.add('dark');
+                // document.querySelector('.circle_mask').classList.add('hide');
+            },
+            onEnterBack: () => {
+                document.querySelector('body').classList.add('dark');
+                // document.querySelector('.circle_mask').classList.add('hide');
+            },
+            // onLeave: () => {
+            //     document.querySelector('body').classList.remove('dark');
+            //     // document.querySelector('.circle_mask').classList.remove('hide');
+            // },
+            onLeaveBack: () => {
+                document.querySelector('body').classList.remove('dark');
+                // document.querySelector('.circle_mask').classList.remove('hide');
+            }
             // markers: {
             //     startColor: "orange",
             //     endColor: "blue",
@@ -165,6 +197,23 @@ function init() {
             duration: 1
         }, "<");
 
+    gsap.fromTo('.circle_mask_light', {
+        width: '0vw',
+        height: '0vw',
+    }, {
+        scrollTrigger: {
+            trigger: '.circle_mask_light_zoom_trigger',
+            start: 'top 55%',
+            end: '+=150%',
+            scrub: true,
+            invalidateOnRefresh: true,
+        },
+        width: '350vw',
+        height: '350vw',
+        duration: 1,
+        immediateRender: false
+    });
+
 
     // CIRCLE INNER SECTIONS ROTATION
     // fuller turn after initial small turn with zoom
@@ -178,7 +227,8 @@ function init() {
             //     endColor: "red",
             // },
             scrub: true,
-            // invalidateOnRefresh: true,
+            invalidateOnRefresh: true,
+            antecipatePin: true,
             pin: true
         }
     })
