@@ -113,7 +113,7 @@ function init() {
         })
         .to('.slice-line-divider.main', {
             css: {
-                display: 'block'
+                display: 'flex'
             },
             duration: 0
         }, "<")
@@ -265,27 +265,28 @@ function init() {
             scrub: true,
             invalidateOnRefresh: true,
         },
-    }).to('.rect_mask', {
-        opacity: 1,
-        duration: 0
     })
-    .fromTo('.circle-section', {
-        left: '-80vw',
-        top: '0vw',
-        rotate: "-168deg",
-    },
-        {
-            top: '-65vw',
-            left: '-42vw',
-            rotate: "-172deg",
-            duration: .8,
-            ease: 'power2.inOut',
-            immediateRender: false
-        }, "<");
+        // .to('.rect_mask', {
+        //     opacity: 1,
+        //     duration: 0
+        // }) // TEMPORARILY DISABLED
+        .fromTo('.circle-section', {
+            left: '-80vw',
+            top: '0vw',
+            rotate: "-168deg",
+        },
+            {
+                top: '-65vw',
+                left: '-42vw',
+                rotate: "-172deg",
+                duration: .8,
+                ease: 'power2.inOut',
+                immediateRender: false
+            }, "<");
 
 
-    let boxLines = document.querySelectorAll('.circle-list-el-container.has-box.right .slice-line-divider');
-    let boxes = document.querySelectorAll('.line_box_container.right');
+    let boxLines = document.querySelectorAll('.circle-list-el-container.has-box .slice-line-divider');
+    let boxes = document.querySelectorAll('.line_box_container');
 
     let amountToRotate = 85;
 
@@ -297,9 +298,17 @@ function init() {
             end: '+=350%',
             scrub: true,
             pin: true,
-
+            markers: true,
+            onEnter: () => {
+                gsap.set('.circle-list-container', {
+                    rotate: '-90.1deg',
+                    immediateRender: false
+                });
+                console.clear();
+                console.log("CHANGE");
+            }
         },
-    }).to('.circle-list-el-container', {
+    }).to('.circle-list-el-container, .rect_mask', {
         // rotateZ: '-75deg',
         rotation: `-=${amountToRotate}`,
         stagger: {
@@ -310,10 +319,12 @@ function init() {
         // onUpdate() previously here**
         onUpdate: (self) => {
             boxLines.forEach((line, index) => {
-                let currentRotation = gsap.getProperty(line, "rotation");
+                let currentRotation = gsap.getProperty(line.parentElement, "rotation");
                 // let angleRad = (currentRotation) * (Math.PI / 180);
 
-                let angleRad = (currentRotation + (22.5 * index)) * (Math.PI / 180);
+                // console.log(line, "rotation: " + currentRotation);
+
+                let angleRad = (currentRotation + (22.5 * index) - 90.1) * (Math.PI / 180);
                 // let originX = line.getBoundingClientRect().left + (line.offsetWidth / 2);
 
                 let originX = circle.getBoundingClientRect().left + circle.offsetWidth / 2;
@@ -371,56 +382,7 @@ function init() {
         .to('.box_row_container_inner', {
             xPercent: 90
         }, "<");
-    // .to('.slice-line-divider', {
-    //     // rotateZ: '-75deg',
-    //     rotation: "-=85",
-    //     stagger: {
-    //         each: 0.0125,
-    //         from: 1, // start from the 6th element (index-based)
-    //     },
-    //     ease: 'none',
-    //     // onUpdate: (self) => {
-    //     //     boxLines.forEach((line, index) => {
-    //     //         let currentRotation = gsap.getProperty(line, "rotation");
-    //     //         // let angleRad = (currentRotation) * (Math.PI / 180);
-
-    //     //         let angleRad = (currentRotation + 22.5 * index) * (Math.PI / 180);
-    //     //         // let originX = line.getBoundingClientRect().left + (line.offsetWidth / 2);
-
-    //     //         let originX = circle.getBoundingClientRect().left + circle.offsetWidth / 2;
-    //     //         let originY = circle.getBoundingClientRect().top + circle.offsetHeight / 2;
-
-    //     //         let boxX = boxes[index].getBoundingClientRect().left + boxes[index].offsetWidth / 2;
-    //     //         let boxY = boxes[index].getBoundingClientRect().top;
-
-    //     //         let intersectionX;
-    //     //         let verticalDistance = boxY - originY;
-
-    //     //         if (Math.abs(Math.cos(angleRad)) < 0.001) {
-    //     //             intersectionX = originX;
-    //     //         } else {
-    //     //             // intersectionX = originX - (Math.tan(angleRad) * line.offsetHeight);
-    //     //             intersectionX = originX + (verticalDistance * Math.tan(angleRad)) * .9;
-    //     //         }
-
-    //     //         gsap.set(boxes[index], {
-    //     //             left: -(intersectionX - (boxes[index].offsetWidth / 2)),
-    //     //         });
-
-    //     //         // boxes[index].querySelector('.line_box_circle').style.left = `${-boxX*.01}px`;
-
-    //     //         // Debugging logs - essential for fine-tuning!
-    //     //         console.log(`--- Line ${index} ---`);
-    //     //         console.log(`Current Line Rotation: ${currentRotation.toFixed(2)} deg`);
-    //     //         console.log(`Angle Rad (for box): ${angleRad.toFixed(2)}`);
-    //     //         console.log(`Origin Y: ${originY.toFixed(2)}px, Target Line Y: ${boxY.toFixed(2)}px`);
-    //     //         console.log(`Vertical Distance (Adjacent): ${verticalDistance.toFixed(2)}px`);
-    //     //         console.log(`Calculated Tan(angleRad): ${Math.tan(angleRad).toFixed(2)}`);
-    //     //         console.log(`Calculated Intersection X: ${intersectionX.toFixed(2)}px`);
-    //     //         console.log(`Box Final Left Position: ${gsap.getProperty(boxes[index], "left").toFixed(2)}px`);
-    //     //     });
-    //     // }
-    // }, "-=.2");
+    
 
     function setSliceLineWidth() {
         let lines = document.querySelectorAll('.slice-line-divider');
@@ -481,7 +443,7 @@ function init() {
             height: '45vw'
         })
         .to('.slice-line-divider', {
-            rotate: (amountToRotate - 3)
+            rotate: -(amountToRotate - 3)
         }, "<");
 
     ScrollTrigger.refresh();

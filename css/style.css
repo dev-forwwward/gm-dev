@@ -151,6 +151,9 @@ section {
     opacity: 0;
     transition: opacity .5s ease;
     transform-origin: top left;
+
+    display: flex;
+    justify-content: center;
 }
 
 .slice-line-divider.main {
@@ -172,6 +175,7 @@ section {
 .box_row_container_inner {
     position: relative;
     display: flex;
+    flex-flow: row-reverse;
     gap: 8vw;
     align-items: center;
     overflow: visible;
@@ -358,7 +362,8 @@ section {
     left: 50%;
     width: 500%;
     height: 500%;
-    background-color: blue;
+    background-color: black;
+    transform-origin: center left;
     opacity: 0;
 }
 
