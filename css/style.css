@@ -353,6 +353,15 @@ section {
     background-color: var(--bg-color);
 }
 
+.rect_mask {
+    position: absolute;
+    left: 50%;
+    width: 500%;
+    height: 500%;
+    background-color: blue;
+    opacity: 0;
+}
+
 .hide {
     display: none;
 }

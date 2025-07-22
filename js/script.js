@@ -265,7 +265,11 @@ function init() {
             scrub: true,
             invalidateOnRefresh: true,
         },
-    }).fromTo('.circle-section', {
+    }).to('.rect_mask', {
+        opacity: 1,
+        duration: 0
+    })
+    .fromTo('.circle-section', {
         left: '-80vw',
         top: '0vw',
         rotate: "-168deg",
@@ -277,7 +281,7 @@ function init() {
             duration: .8,
             ease: 'power2.inOut',
             immediateRender: false
-        });
+        }, "<");
 
 
     let boxLines = document.querySelectorAll('.circle-list-el-container.has-box.right .slice-line-divider');
@@ -295,7 +299,7 @@ function init() {
             pin: true,
 
         },
-    }).to('.slice-line-divider', {
+    }).to('.circle-list-el-container', {
         // rotateZ: '-75deg',
         rotation: `-=${amountToRotate}`,
         stagger: {
