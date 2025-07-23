@@ -97,7 +97,7 @@ section {
     /* background: rgba(255, 255, 255, 0.412); */
     border-radius: 100%;
     position: relative;
-    border: 2px var(--main-color) solid;
+    /* border: 2px var(--main-color) solid; */
     /* width: 45vw;
     height: 45vw; */
     width: 96vw;
@@ -113,6 +113,16 @@ section {
     /* left: -80vw; */
 }
 
+.circle-section::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    border: 2px var(--main-color) solid;
+    z-index: 10;
+}
+
 .init-circle-section {
     position: absolute;
     top: -55vw;
@@ -120,6 +130,51 @@ section {
     left: auto;
     right: auto;
     background-color: transparent;
+    border: 2px var(--main-color) solid;
+}
+
+.circle_orbit_container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    /* background-color: blue; */
+    z-index: 100;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    animation: orbitRotation 35s linear;
+    animation-iteration-count: infinite;
+}
+
+.circle_orbit_element,
+.center_circle {
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    background-color: red;
+    border-radius: 100%;
+    left: -11px;
+}
+
+.center_circle {
+    left: unset;
+    opacity: 0;
+    z-index: 100;
+}
+
+.init-circle-section .circle_orbit_element {
+    left: unset;
+    right: -11px;
+}
+
+@keyframes orbitRotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* .circle-list-container {
@@ -341,6 +396,26 @@ section {
     background-color: var(--main-color);
     transform-origin: center left;
 }
+
+.border_square .circle_orbit_element {
+    width: 16px;
+    height: 16px;
+}
+
+.border_square.left .circle_orbit_element {
+    margin: auto;
+    top: calc(50% - 8px);
+    left: calc(100% - 8px);
+    z-index: 10;
+}
+
+.border_square.right .circle_orbit_element {
+    margin: auto;
+    top: calc(50% - 8px);
+    right: calc(100% - 8px);
+    z-index: 10;
+}
+
 
 .circle_mask,
 .circle_mask_light {

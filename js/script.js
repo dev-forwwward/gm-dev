@@ -69,8 +69,15 @@ function init() {
                 end: '+=225%',
                 pin: true,
                 pinSpacing: false,
+                scrub: true,
+                immediateRender: false,
+                duration: 1,
                 // anticipatePin: true,
             }
+        }).to('.init-circle-section .circle_orbit_element', {
+            opacity: 0,
+            duration: .1,
+            ease: 'power2.out'
         });
     }
 
@@ -80,7 +87,7 @@ function init() {
         scrollTrigger: {
             trigger: '.unified_lines_trigger',
             start: 'top-=20% bottom',
-            end: 'bottom bottom',
+            end: 'bottom bottom-=10%',
             scrub: true,
         }
     })
@@ -95,6 +102,10 @@ function init() {
             scale: 1.05,
             yPercent: -10,
             duration: 1,
+        }, "<")
+        .from('.border_square', {
+            opacity: 0,
+            duration: .2
         }, "<")
         .from('.border_square.left', {
             delay: .2,
@@ -111,6 +122,10 @@ function init() {
             opacity: 0,
             duration: 0
         })
+        .to('.init-circle-section', {
+            opacity: 0,
+            duration: .5
+        }, "<")
         .to('.slice-line-divider.main', {
             css: {
                 display: 'flex'
@@ -122,6 +137,10 @@ function init() {
                 display: 'none'
             },
             duration: 0
+        }, "<")
+        .to('.center_circle', {
+            opacity: 1,
+            duration: 0
         }, "<");
 
     gsap.fromTo('.circle_mask', {
@@ -130,7 +149,7 @@ function init() {
     }, {
         scrollTrigger: {
             trigger: '.circle_mask_zoom_trigger',
-            start: 'top-=25% bottom',
+            start: 'top-=30% bottom',
             end: '+=300%',
             scrub: true,
             markers: true
@@ -171,6 +190,11 @@ function init() {
             // },
         },
     })
+        .to('.circle-section .circle_orbit_element', {
+            opacity: 0,
+            duration: .25,
+            ease: 'power2.out'
+        })
         .fromTo('.circle-section', {
             left: '0vw',
             width: '45vw',
@@ -183,7 +207,7 @@ function init() {
             rotate: '15deg',
             duration: 1,
             immediateRender: false
-        })
+        }, "<")
         .to('.circle-section .slice-line-divider', {
             opacity: 1,
             duration: .5,
@@ -194,10 +218,11 @@ function init() {
         }, {
             delay: .1,
             rotate: "15deg",
+            immediateRender: false,
             duration: 1
         }, "<");
 
-    gsap.fromTo('.circle_mask_light', {
+    gsap.timeline().fromTo('.circle_mask_light', {
         width: '0vw',
         height: '0vw',
     }, {
@@ -212,7 +237,10 @@ function init() {
         height: '350vw',
         duration: 1,
         immediateRender: false
-    });
+    }).from('.circle-list-el-content', {
+        opacity: 0,
+        duration: 0
+    }, "<");
 
 
     // CIRCLE INNER SECTIONS ROTATION
@@ -234,6 +262,7 @@ function init() {
     })
         .to('.circle-section', {
             rotate: "-168deg",
+            immediateRender: false,
             duration: 1
         })
         .to('.circle-list-el-content', {
@@ -323,6 +352,7 @@ function init() {
             each: 0.0125,
             from: 12, // start from the 6th element (index-based)
         },
+        immediateRender: false,
         ease: 'none',
         // onUpdate() previously here**
         onUpdate: (self) => {
@@ -385,12 +415,14 @@ function init() {
         }
     })
         .to('.circle-section, .box_row_container_inner', {
-            left: '45%'
+            left: '45%',
+            immediateRender: false,
         }, "-=.2")
         .to('.box_row_container_inner', {
-            xPercent: 90
+            xPercent: 90,
+            immediateRender: false,
         }, "<");
-    
+
 
     function setSliceLineWidth() {
         let lines = document.querySelectorAll('.slice-line-divider');
@@ -448,10 +480,23 @@ function init() {
             left: 0,
             top: 'auto',
             width: '45vw',
-            height: '45vw'
+            height: '45vw',
+            immediateRender: false
         })
         .to('.slice-line-divider', {
-            rotate: -(amountToRotate - 3)
+            rotate: -(amountToRotate - 3),
+            immediateRender: false
+        }, "<")
+        .to('.circle-section .circle_orbit_element', {
+            opacity: 1,
+            duration: 1,
+            ease: 'power2.out',
+            immediateRender: false
+        }, "<")
+        .to('.slice-line-divider:not(.main)', {
+            opacity: 0,
+            duration: 1,
+            immediateRender: false
         }, "<");
 
     ScrollTrigger.refresh();
