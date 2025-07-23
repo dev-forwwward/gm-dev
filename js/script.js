@@ -306,6 +306,14 @@ function init() {
                 });
                 console.clear();
                 console.log("CHANGE");
+            },
+            onLeaveBack: () => {
+                gsap.set('.circle-list-container', {
+                    rotate: '0deg',
+                    immediateRender: false
+                });
+                console.clear();
+                console.log("LEAVE BACK");
             }
         },
     }).to('.circle-list-el-container, .rect_mask', {
