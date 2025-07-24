@@ -293,12 +293,20 @@ function init() {
             // },
             scrub: true,
             invalidateOnRefresh: true,
-        },
+            onLeaveBack: () => {
+                gsap.set('.rect_mask', {
+                    opacity: 0,
+                });
+            }
+        }
     })
-        // .to('.rect_mask', {
-        //     opacity: 1,
-        //     duration: 0
-        // }) // TEMPORARILY DISABLED
+        .fromTo('.rect_mask', {
+            opacity: 0,
+        }, {
+            opacity: 1,
+            duration: 0,
+            immediateRender: false
+        })
         .fromTo('.circle-section', {
             left: '-80vw',
             top: '0vw',
@@ -331,7 +339,7 @@ function init() {
             onEnter: () => {
                 gsap.set('.circle-list-container', {
                     rotate: '-90.1deg',
-                    immediateRender: false
+                    // immediateRender: false
                 });
                 console.clear();
                 console.log("CHANGE");
@@ -339,7 +347,7 @@ function init() {
             onLeaveBack: () => {
                 gsap.set('.circle-list-container', {
                     rotate: '0deg',
-                    immediateRender: false
+                    // immediateRender: false
                 });
                 console.clear();
                 console.log("LEAVE BACK");
@@ -421,7 +429,12 @@ function init() {
         .to('.box_row_container_inner', {
             xPercent: 90,
             immediateRender: false,
-        }, "<");
+        }, "<")
+        .to('.circle_mask_light, .rect_mask', {
+            opacity: 0,
+            duration: 0,
+            immediateRender: false
+        });
 
 
     function setSliceLineWidth() {
