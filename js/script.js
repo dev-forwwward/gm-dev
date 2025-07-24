@@ -473,30 +473,48 @@ function init() {
             start: 'top bottom',
             end: 'bottom bottom',
             scrub: true,
-            immediateRender: false
+            markers: true
         }
     })
+        .fromTo('.circle_mask_red', {
+            width: '0vw',
+            height: '0vw',
+        }, {
+            width: '120vw',
+            height: '120vw',
+            duration: 1,
+            immediateRender: false
+        })
         .to('.circle-section', {
             left: 0,
             top: 'auto',
             width: '45vw',
             height: '45vw',
-            immediateRender: false
-        })
+            immediateRender: false,
+            duration: 1
+        }, "<")
         .to('.slice-line-divider', {
-            rotate: -(amountToRotate - 3),
-            immediateRender: false
+            rotate: "-=" + (amountToRotate * .68),
+            immediateRender: false,
+            duration: 1,
+            ease: 'power2.in',
         }, "<")
         .to('.circle-section .circle_orbit_element', {
             opacity: 1,
             duration: 1,
-            ease: 'power2.out',
+            ease: 'power2.in',
             immediateRender: false
         }, "<")
         .to('.slice-line-divider:not(.main)', {
             opacity: 0,
             duration: 1,
             immediateRender: false
+        }, "<")
+        .to(".circle_orbit_element, .center_circle", {
+            css: {
+                backgroundColor: "#fff",
+            },
+            duration: 1,
         }, "<");
 
     ScrollTrigger.refresh();

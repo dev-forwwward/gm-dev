@@ -2,6 +2,7 @@
     --main-color: #AE9EA1;
     --bg-color: #F0E7E9;
     --bg-color-dark: #2A2A2A;
+    --red: #E85B54;
 }
 
 * {
@@ -152,9 +153,10 @@ section {
     width: 22px;
     height: 22px;
     position: absolute;
-    background-color: red;
+    background-color: var(--red);
     border-radius: 100%;
     left: -11px;
+    filter: blur(3px);
 }
 
 .center_circle {
@@ -418,7 +420,8 @@ section {
 
 
 .circle_mask,
-.circle_mask_light {
+.circle_mask_light,
+.circle_mask_red {
     position: absolute;
     inset: auto;
     width: 0vw;
@@ -432,12 +435,16 @@ section {
     background-color: var(--bg-color);
 }
 
+.circle_mask_red {
+    background-color: var(--red);
+}
+
 .rect_mask {
     position: absolute;
     left: 50%;
     width: 500%;
     height: 500%;
-    background-color: black;
+    background-color: var(--bg-color-dark);
     transform-origin: center left;
     opacity: 0;
 }
