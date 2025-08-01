@@ -1,0 +1,114 @@
+@media screen and (max-width: 991px) {
+    body {
+        font-size: clamp(1rem, 4vw, 2.5rem);
+    }
+
+    .hero_title,
+    h1 {
+        font-size: clamp(4rem, 18vw, 8rem);
+    }
+
+    h2 {
+        font-size: clamp(2rem, 8vw, 3.5rem) !important;
+    }
+
+    .m_hero_title {
+        padding-top: 2rem !important;
+    }
+
+    .m_padding {
+        padding-left: 1.25rem !important;
+        padding-right: 1.25rem !important;
+    }
+
+    .m_col {
+        display: flex;
+        flex-flow: column;
+    }
+
+    .m_col.center {
+        align-items: center;
+    }
+
+    .m_gap_medium {
+        gap: 3rem;
+    }
+
+    .m_gap_small {
+        gap: 1.25rem;
+    }
+
+    .circle-list-el-container {
+        padding-left: 52vw;
+    }
+
+    .circle-list-el-content {
+        font-size: 0.75rem;
+        gap: 0rem;
+        padding: 1rem;
+    }
+
+    .circle-list-el-content h2 {
+        font-size: 1.625;
+        padding-bottom: .75rem;
+    }
+
+    .box_row_container_inner {
+        flex-flow: column;
+    }
+
+    .line_box_container {
+        position: relative;
+        inset: unset;
+        gap: 1rem;
+    }
+
+
+    .rotator_section {
+        max-height: 100svh;
+    }
+
+    .circle-section,
+    .init-circle-section {
+        width: 200vw;
+        height: 200vw;
+        top: 115vw;
+        left: -20vw;
+    }
+
+    .init-circle-section {
+        top: -102vw;
+        left: 6vw;
+    }
+
+    .circle-section::before {
+        width: 99%;
+        height: 99%;
+    }
+
+    .border_square.left::before,
+    .border_square.left::before {
+        right: 0;
+    }
+
+    .border_square.left::before,
+    .border_square.left::after {
+        width: 200%;
+        right: 0;
+        /* transform: translate(0, 50svh) rotate(-45deg); */
+    }
+
+
+    .border_square.right::before,
+    .border_square.right::after {
+        width: 200%;
+        left: 0;
+        /* transform: translate(0, 50svh) rotate(45deg); */
+    }
+
+
+    .border_square.right::before,
+    .border_square.right::before {
+        left: 0;
+    }
+}
