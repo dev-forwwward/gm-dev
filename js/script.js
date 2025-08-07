@@ -19,7 +19,7 @@ function init() {
         setSliceLineWidth();
 
         const circle = document.querySelector('.circle-section');
-        
+
         // console.log("screen diagonal is:", Math.sqrt(Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2)));
 
 
@@ -348,8 +348,7 @@ function init() {
                     immediateRender: false
                 }, "<");
 
-
-        let boxLines = document.querySelectorAll('.circle-list-el-container.has-box .slice-line-divider');
+        let boxLines = document.querySelectorAll('.circle-list-el-container.has-box');
         let boxes = document.querySelectorAll('.line_box_container');
 
         let amountToRotate = 85;
@@ -380,75 +379,52 @@ function init() {
                     console.log("LEAVE BACK");
                 }
             },
-        }).to('.circle-list-el-container, .rect_mask', {
-            // rotateZ: '-75deg',
-            rotation: `-=${amountToRotate}`,
-            stagger: {
-                each: 0.0125,
-                from: 12, // start from the 6th element (index-based)
-            },
-            immediateRender: false,
-            ease: 'none',
-            // onUpdate() previously here**
-            onUpdate: (self) => {
-                boxLines.forEach((line, index) => {
-                    let currentRotation = gsap.getProperty(line.parentElement, "rotation");
-                    // let angleRad = (currentRotation) * (Math.PI / 180);
-
-                    // console.log(line, "rotation: " + currentRotation);
-
-                    let angleRad = (currentRotation + (22.5 * index) - 90.1) * (Math.PI / 180);
-                    // let originX = line.getBoundingClientRect().left + (line.offsetWidth / 2);
-
-                    let originX = circle.getBoundingClientRect().left + circle.offsetWidth / 2;
-                    let originY = circle.getBoundingClientRect().top + circle.offsetHeight / 2;
-
-                    let endX = line.getBoundingClientRect().right;
-                    let endY = line.getBoundingClientRect().bottom - line.offsetHeight / 2;
-
-                    let boxX = boxes[index].getBoundingClientRect().left + boxes[index].offsetWidth / 2;
-                    let boxY = boxes[index].getBoundingClientRect().top;
-
-                    let intersectionX;
-                    let verticalDistance = boxY - originY;
-
-                    if (Math.abs(Math.cos(angleRad)) < 0.001 && originY < endY) {
-                        intersectionX = originX;
-                        console.log("VERTICAL POINT");
-                    } else {
-                        // intersectionX = originX - (Math.tan(angleRad) * line.offsetHeight);
-                        intersectionX = originX + (verticalDistance * Math.tan(angleRad)) * .9;
-                        // console.log("running as usual");
-                    }
-
-                    if (endY <= originY || Math.tan(angleRad) == 0) {
-                        // check for when lines are horizontal or going up, rotating back - box behavior must be different, otherwise they will loop back
-                        intersectionX = window.innerWidth;
-                        console.log(line.parentElement + " is horizontal or looping back, resetting position for " + index);
-                    }
-
-                    // console.log(originY, endY);
-
-
-
-                    gsap.set(boxes[index], {
-                        left: -(intersectionX - (boxes[index].offsetWidth / 2)),
-                    });
-
-                    // boxes[index].querySelector('.line_box_circle').style.left = `${-boxX*.01}px`;
-
-                    // Debugging logs - essential for fine-tuning!
-                    // console.log(`--- Line ${index} ---`);
-                    // console.log(`Current Line Rotation: ${currentRotation.toFixed(2)} deg`);
-                    // console.log(`Angle Rad (for box): ${angleRad.toFixed(2)}`);
-                    // console.log(`Origin Y: ${originY.toFixed(2)}px, Target Line Y: ${boxY.toFixed(2)}px`);
-                    // console.log(`Vertical Distance (Adjacent): ${verticalDistance.toFixed(2)}px`);
-                    // console.log(`Calculated Tan(angleRad): ${Math.tan(angleRad).toFixed(2)}`);
-                    // console.log(`Calculated Intersection X: ${intersectionX.toFixed(2)}px`);
-                    // console.log(`Box Final Left Position: ${gsap.getProperty(boxes[index], "left").toFixed(2)}px`);
-                });
-            }
         })
+            .to('.circle-list-el-container', {
+                // rotateZ: '-75deg',
+                rotation: `-=${amountToRotate}`,
+                // stagger: {
+                //     each: 0.0125,
+                //     from: 12, // start from the 6th element (index-based)
+                // },
+                immediateRender: false,
+                ease: 'none',
+                // onUpdate() previously here**
+                onUpdate: (self) => {
+                    boxLines.forEach((line, index) => {
+                        let currentRotation = gsap.getProperty(line, "rotation");
+
+                        // Account for ALL nested rotations
+                        let totalRotation = -172 + (-90.1) + currentRotation;
+                        let angleRad = totalRotation * (Math.PI / 180);
+
+                        // Get the actual center of rotation (accounting for left: -42%)
+                        let sectionRect = document.querySelector('.circle-section').getBoundingClientRect();
+                        let originX = circle.getBoundingClientRect().left + circle.offsetWidth / 2;
+                        let originY = circle.getBoundingClientRect().top + circle.offsetHeight / 2;
+
+                        // Rest of your calculation using these corrected values
+                        let boxY = boxes[index].getBoundingClientRect().top;
+                        let verticalDistance = boxY - originY;
+
+                        let intersectionX;
+                        if (Math.abs(Math.cos(angleRad)) < 0.001) {
+                            intersectionX = originX;
+                        } else {
+                            intersectionX = originX + (verticalDistance * Math.tan(angleRad));
+                        }
+
+                        gsap.set(boxes[index], {
+                            left: -(intersectionX - (boxes[index].offsetWidth / 2)),
+                        });
+                    });
+                }
+            })
+            .to('.rect_mask', {
+                rotation: `-=${amountToRotate}`,
+                immediateRender: false,
+                ease: 'none',
+            }, "<")
             .to('.circle-section, .box_row_container_inner', {
                 left: '45%',
                 immediateRender: false,
